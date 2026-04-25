@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { Ggurim } from '../types';
 
-const STORAGE_KEY = 'kkurim-ggurim-list';
+const STORAGE_KEY = 'jim_kkurumi';
 
 function generateId(): string {
   return `ggurim-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;

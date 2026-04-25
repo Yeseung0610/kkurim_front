@@ -51,13 +51,14 @@ export default function Header({
             <h1 className="text-lg font-semibold font-noto">{title}</h1>
           ) : (
             <div
-              className="flex items-center gap-2 cursor-pointer"
+              className="flex items-center cursor-pointer"
               onClick={() => navigate('/')}
             >
-              <span className="text-2xl">🎒</span>
-              <span className="text-xl font-semibold font-montserrat tracking-wide">
-                KKURIM
-              </span>
+              <img
+                src="/assets/kkurim_logo_horizontal.svg"
+                alt="KKURIM"
+                className="h-8"
+              />
             </div>
           )}
         </div>
