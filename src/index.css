@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Primary Colors */
+  --color-bg-primary: #FDF9F5;
+  --color-text-primary: #594D46;
+
+  /* Brand Accent Colors */
+  --color-accent-coral: #E0A899;
+  --color-accent-cream: #E5D5C5;
+  --color-accent-sage: #A3B396;
+  --color-accent-steel: #8B9DAD;
+  --color-accent-charcoal: #31302E;
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  min-height: 100vh;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-text-primary text-bg-primary rounded-button px-8 py-4 font-medium transition-all hover:opacity-90 active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply bg-transparent text-text-primary border-[1.5px] border-text-primary rounded-button px-8 py-4 font-medium transition-all hover:bg-text-primary hover:bg-opacity-5 active:scale-95;
+  }
+
+  .card {
+    @apply bg-white rounded-card shadow-card p-lg;
+  }
+
+  .category-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+  }
+
+  .category-badge-업무 {
+    @apply bg-accent-steel bg-opacity-20 text-accent-steel;
+  }
+
+  .category-badge-생활 {
+    @apply bg-accent-sage bg-opacity-20 text-accent-sage;
+  }
+
+  .category-badge-여행 {
+    @apply bg-accent-coral bg-opacity-20 text-accent-coral;
+  }
+}
