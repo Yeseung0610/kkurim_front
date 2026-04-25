@@ -5,13 +5,20 @@ export async function exportToPng(
   fileName: string = 'kkurim-poster'
 ): Promise<void> {
   try {
+    // 요소의 실제 크기를 기반으로 캡처
+    const rect = element.getBoundingClientRect();
+
     const canvas = await html2canvas(element, {
-      width: 1080,
-      height: 1080,
-      scale: 2,
+      scale: 2,  // 고해상도를 위해 2배 스케일
       useCORS: true,
-      backgroundColor: null,
+      backgroundColor: '#FDF9F5',  // 배경색 명시
       logging: false,
+      width: rect.width,
+      height: rect.height,
+      scrollX: 0,
+      scrollY: 0,
+      windowWidth: rect.width,
+      windowHeight: rect.height,
     });
 
     // Blob으로 변환
@@ -45,13 +52,19 @@ export async function exportToPng(
 }
 
 export async function getImageDataUrl(element: HTMLElement): Promise<string> {
+  const rect = element.getBoundingClientRect();
+
   const canvas = await html2canvas(element, {
-    width: 1080,
-    height: 1080,
     scale: 2,
     useCORS: true,
-    backgroundColor: null,
+    backgroundColor: '#FDF9F5',
     logging: false,
+    width: rect.width,
+    height: rect.height,
+    scrollX: 0,
+    scrollY: 0,
+    windowWidth: rect.width,
+    windowHeight: rect.height,
   });
 
   return canvas.toDataURL('image/png');
