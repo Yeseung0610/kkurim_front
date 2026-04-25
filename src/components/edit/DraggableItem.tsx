@@ -115,7 +115,12 @@ export default function DraggableItem({
       onMouseDown={handleMouseDown}
       onTouchStart={handleTouchStart}
     >
-      <span className="text-4xl">{item.emoji}</span>
+      <img
+        src={item.image}
+        alt={item.name}
+        className="w-12 h-12 object-contain pointer-events-none"
+        draggable={false}
+      />
 
       {/* 삭제 버튼 */}
       {isSelected && !isDragging && (

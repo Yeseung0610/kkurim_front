@@ -46,11 +46,11 @@ export default function HomePage() {
         {ggurimList.length > 0 && (
           <div className="fixed bottom-6 left-1/2 -translate-x-1/2 max-w-lg w-full px-4">
             <button
-              onClick={() => navigate('/edit/new')}
+              onClick={() => navigate('/chat')}
               className="btn-primary w-full flex items-center justify-center gap-2 shadow-lg"
             >
-              <span className="text-xl">+</span>
-              <span>짐 꾸리기</span>
+              <span className="text-xl">✨</span>
+              <span>AI와 짐 꾸리기</span>
             </button>
           </div>
         )}

@@ -37,7 +37,7 @@ export default function ItemPanel({ onItemSelect }: ItemPanelProps) {
       </div>
 
       {/* 아이템 그리드 */}
-      <div className="grid grid-cols-5 gap-2 max-h-32 overflow-y-auto">
+      <div className="grid grid-cols-5 gap-2 max-h-40 overflow-y-auto">
         {items.map(item => (
           <button
             key={item.id}
@@ -45,7 +45,11 @@ export default function ItemPanel({ onItemSelect }: ItemPanelProps) {
             className="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-accent-cream/30 transition-colors"
             title={item.name}
           >
-            <span className="text-2xl">{item.emoji}</span>
+            <img
+              src={item.image}
+              alt={item.name}
+              className="w-10 h-10 object-contain"
+            />
             <span className="text-[10px] text-text-primary/60 truncate w-full text-center">
               {item.name}
             </span>

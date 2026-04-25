@@ -33,18 +33,18 @@ export default function GgurimCard({ ggurim }: GgurimCardProps) {
             const item = getItemById(placedItem.iconId);
             if (!item) return null;
             return (
-              <span
+              <img
                 key={placedItem.id}
-                className="absolute text-2xl"
+                src={item.image}
+                alt={item.name}
+                className="absolute w-8 h-8 object-contain"
                 style={{
                   left: `${placedItem.x * 100}%`,
                   top: `${placedItem.y * 100}%`,
                   transform: 'translate(-50%, -50%)',
                   opacity: index >= 4 ? 0.6 : 1,
                 }}
-              >
-                {item.emoji}
-              </span>
+              />
             );
           })}
           {ggurim.items.length > 6 && (

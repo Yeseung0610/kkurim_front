@@ -182,7 +182,11 @@ export default function DetailPage() {
                       key={placedItem.id}
                       className="flex items-center gap-3 py-2 border-b border-accent-cream/30 last:border-0"
                     >
-                      <span className="text-2xl">{item.emoji}</span>
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-10 h-10 object-contain"
+                      />
                       <span className="text-text-primary">{item.name}</span>
                       <span className="text-text-primary/40 text-sm ml-auto">
                         #{index + 1}

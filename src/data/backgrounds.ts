@@ -2,34 +2,22 @@ import type { Background } from '../types';
 
 export const backgrounds: Background[] = [
   {
-    id: 'bg-cream',
-    name: '크림',
-    type: 'solid',
-    value: '#FDF9F5',
+    id: 'bg-carrier',
+    name: '캐리어',
+    type: 'pattern',
+    value: '/assets/캐리어-스텝1.svg',
   },
   {
-    id: 'bg-coral-gradient',
-    name: '코랄 그라데이션',
-    type: 'gradient',
-    value: 'linear-gradient(135deg, #FDF9F5 0%, #E0A899 100%)',
+    id: 'bg-briefcase',
+    name: '서류가방',
+    type: 'pattern',
+    value: '/assets/서류가방-스텝1.svg',
   },
   {
-    id: 'bg-sage-gradient',
-    name: '세이지 그라데이션',
-    type: 'gradient',
-    value: 'linear-gradient(135deg, #FDF9F5 0%, #A3B396 100%)',
-  },
-  {
-    id: 'bg-steel-gradient',
-    name: '스틸 그라데이션',
-    type: 'gradient',
-    value: 'linear-gradient(135deg, #FDF9F5 0%, #8B9DAD 100%)',
-  },
-  {
-    id: 'bg-warm-sunset',
-    name: '따뜻한 석양',
-    type: 'gradient',
-    value: 'linear-gradient(180deg, #E5D5C5 0%, #E0A899 50%, #FDF9F5 100%)',
+    id: 'bg-ecobag',
+    name: '에코백',
+    type: 'pattern',
+    value: '/assets/에코백-스텝1.svg',
   },
 ];
 
@@ -41,5 +29,15 @@ export function getBackgroundStyle(background: Background): React.CSSProperties 
   if (background.type === 'solid') {
     return { backgroundColor: background.value };
   }
-  return { background: background.value };
+  if (background.type === 'gradient') {
+    return { background: background.value };
+  }
+  // pattern - 이미지 배경
+  return {
+    backgroundImage: `url(${background.value})`,
+    backgroundSize: 'contain',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundColor: '#FDF9F5',
+  };
 }

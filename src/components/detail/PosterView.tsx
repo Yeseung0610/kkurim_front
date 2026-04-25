@@ -23,17 +23,17 @@ const PosterView = forwardRef<HTMLDivElement, PosterViewProps>(
           if (!item) return null;
 
           return (
-            <div
+            <img
               key={placedItem.id}
-              className="absolute text-4xl"
+              src={item.image}
+              alt={item.name}
+              className="absolute w-16 h-16 object-contain"
               style={{
                 left: `${placedItem.x * 100}%`,
                 top: `${placedItem.y * 100}%`,
                 transform: 'translate(-50%, -50%)',
               }}
-            >
-              {item.emoji}
-            </div>
+            />
           );
         })}
 

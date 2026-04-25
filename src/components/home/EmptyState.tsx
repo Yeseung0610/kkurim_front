@@ -14,11 +14,11 @@ export default function EmptyState() {
         나만의 짐꾸러미를 만들어보세요!
       </p>
       <button
-        onClick={() => navigate('/edit/new')}
+        onClick={() => navigate('/chat')}
         className="btn-primary flex items-center gap-2"
       >
-        <span className="text-xl">+</span>
-        <span>짐 꾸리기</span>
+        <span className="text-xl">✨</span>
+        <span>AI와 짐 꾸리기</span>
       </button>
     </div>
   );

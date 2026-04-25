@@ -28,6 +28,6 @@ export interface Background {
 export interface ItemIcon {
   id: string;
   name: string;
-  emoji: string;  // MVP에서는 이모지 사용
+  image: string;  // 아이소메트릭 이미지 경로
   category: Category;
 }
