@@ -18,9 +18,9 @@ interface GgurimSuggestion {
 // 사용 가능한 아이템 목록을 문자열로 변환
 function getAvailableItemsPrompt(): string {
   const itemsByCategory = {
-    '업무': items.filter(i => i.category === '업무').map(i => `${i.id}(${i.name})`).join(', '),
-    '생활': items.filter(i => i.category === '생활').map(i => `${i.id}(${i.name})`).join(', '),
-    '여행': items.filter(i => i.category === '여행').map(i => `${i.id}(${i.name})`).join(', '),
+    '업무': items.filter(i => i.category === '업무').map(i => i.id).join(', '),
+    '생활': items.filter(i => i.category === '생활').map(i => i.id).join(', '),
+    '여행': items.filter(i => i.category === '여행').map(i => i.id).join(', '),
   };
 
   return `
@@ -32,7 +32,9 @@ function getAvailableItemsPrompt(): string {
 
 const SYSTEM_PROMPT = `당신은 "꾸림" 앱의 AI 어시스턴트입니다. 사용자가 어떤 상황이나 활동을 설명하면, 그에 맞는 준비물 꾸러미를 추천해주세요.
 
-사용 가능한 준비물 아이템:
+⚠️ 중요: 아래 목록에 있는 아이템만 추천할 수 있습니다. 목록에 없는 아이템은 절대 추천하지 마세요!
+
+사용 가능한 준비물 (이 중에서만 선택하세요):
 ${getAvailableItemsPrompt()}
 
 응답 규칙:
@@ -42,15 +44,16 @@ ${getAvailableItemsPrompt()}
 
 \`\`\`json
 {
-  "name": "꾸러미 이름",
-  "category": "업무" | "생활" | "여행",
+  "name": "꾸러미 이름 (10자 이내)",
+  "category": "업무" 또는 "생활" 또는 "여행",
   "itemIds": ["아이템ID1", "아이템ID2", ...]
 }
 \`\`\`
 
-4. itemIds는 위에 제공된 아이템 ID만 사용하세요
-5. 추천 이유도 간단히 설명해주세요
-6. 사용자가 추가/삭제를 요청하면 수정된 JSON을 다시 제공하세요`;
+4. ⚠️ itemIds에는 위 목록에 있는 정확한 ID만 사용하세요! (예: "여권", "충전기", "우산" 등)
+5. 목록에 없는 아이템(카메라, 선글라스, 지도, 옷 등)은 포함하지 마세요
+6. 추천 이유도 간단히 설명해주세요
+7. 사용자가 추가/삭제를 요청하면 수정된 JSON을 다시 제공하세요`;
 
 export async function sendChatMessage(
   messages: ChatMessage[]
@@ -110,10 +113,14 @@ function parseGgurimSuggestion(content: string): GgurimSuggestion | null {
       return null;
     }
 
-    // 유효한 아이템 ID만 필터링
+    // 유효한 아이템 ID만 필터링 (id 또는 name으로 매칭)
     const validItemIds = parsed.itemIds.filter((id: string) =>
-      items.some(item => item.id === id)
-    );
+      items.some(item => item.id === id || item.name === id)
+    ).map((id: string) => {
+      // name으로 매칭된 경우 id로 변환
+      const item = items.find(i => i.id === id) || items.find(i => i.name === id);
+      return item?.id || id;
+    });
 
     return {
       name: parsed.name,
