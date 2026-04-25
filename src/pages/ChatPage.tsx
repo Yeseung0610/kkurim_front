@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/common/Header';
-import { useGgurimStore } from '../hooks/useGgurimStore';
 import { sendChatMessage, itemIdsToPlacedItems } from '../utils/openai';
 import { backgrounds } from '../data/backgrounds';
 import { getItemById } from '../data/items';
@@ -20,7 +19,6 @@ interface Message {
 
 export default function ChatPage() {
   const navigate = useNavigate();
-  const { create } = useGgurimStore();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'welcome',
@@ -97,15 +95,17 @@ export default function ChatPage() {
 
     const placedItems = itemIdsToPlacedItems(currentSuggestion.itemIds);
 
-    const newGgurim = create({
-      name: currentSuggestion.name,
-      category: currentSuggestion.category,
-      backgroundId: backgrounds[0].id,
-      items: placedItems,
+    // 새 꾸러미 데이터를 state로 전달하여 편집 화면으로 이동
+    navigate('/edit/new', {
+      state: {
+        initialData: {
+          name: currentSuggestion.name,
+          category: currentSuggestion.category,
+          backgroundId: backgrounds[0].id,
+          items: placedItems,
+        },
+      },
     });
-
-    // 편집 화면으로 이동
-    navigate(`/edit/${newGgurim.id}`);
   };
 
   // 키보드 이벤트

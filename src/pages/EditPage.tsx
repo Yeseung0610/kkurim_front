@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import type { Category, PlacedItem, ItemIcon } from '../types';
 import { categories } from '../data/items';
 import { backgrounds } from '../data/backgrounds';
@@ -14,19 +14,30 @@ function generateItemId(): string {
   return `item-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 }
 
+interface LocationState {
+  initialData?: {
+    name: string;
+    category: Category;
+    backgroundId: string;
+    items: PlacedItem[];
+  };
+}
+
 export default function EditPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const { getById, create, update, isLoaded } = useGgurimStore();
   const canvasRef = useRef<HTMLDivElement>(null);
 
   const isNewMode = !id || id === 'new';
+  const locationState = location.state as LocationState | null;
 
-  // 폼 상태
-  const [name, setName] = useState('');
-  const [category, setCategory] = useState<Category>('업무');
-  const [backgroundId, setBackgroundId] = useState(backgrounds[0].id);
-  const [items, setItems] = useState<PlacedItem[]>([]);
+  // 폼 상태 - AI 채팅에서 전달된 초기 데이터 적용
+  const [name, setName] = useState(locationState?.initialData?.name || '');
+  const [category, setCategory] = useState<Category>(locationState?.initialData?.category || '업무');
+  const [backgroundId, setBackgroundId] = useState(locationState?.initialData?.backgroundId || backgrounds[0].id);
+  const [items, setItems] = useState<PlacedItem[]>(locationState?.initialData?.items || []);
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
 
   // UI 상태
